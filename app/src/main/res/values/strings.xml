@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">translater</string>
+    <string name="empty_server_response_on_success">Сервер не нашел введенное слово</string>
+    <string name="undefined_error">Ошибка</string>
+    <string name="hi">hi</string>
+    <string name="button_search">Поиск</string>
+    <string name="search_hint">Новое слово</string>
+    <string name="delete_description">Удалить</string>
+    <string name="reload">Перезагрузить</string>
+</resources>
