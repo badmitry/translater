@@ -2,25 +2,49 @@ package com.badmitry.translater.view.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.badmitry.translater.presenter.IPresenter
+import com.badmitry.translater.R
 import com.badmitry.translator.model.data.AppState
+import com.badmitry.translator.view.main.AlertDialogFragment
+import com.badmitry.translator.viewmodel.BaseViewModel
+import com.badmitry.translator.viewmodel.Interactor
 
-abstract class BaseActivity<T : AppState> : AppCompatActivity(), IView {
-    protected lateinit var presenter: IPresenter<T, IView>
-    protected abstract fun createPresenter(): IPresenter<T, IView>
-    abstract override fun renderData(appState: AppState)
+abstract class BaseActivity<T : AppState, I : Interactor<T>> : AppCompatActivity() {
+
+    companion object {
+        private const val DIALOG_FRAGMENT_TAG = "1100"
+    }
+
+    abstract val model: BaseViewModel<T>
+
+    protected var isNetworkAvailable: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = createPresenter()
+        isNetworkAvailable = isOnline(applicationContext)
     }
 
-    override fun onStart() {
-        super.onStart()
-        presenter.attachView(this)
+    override fun onResume() {
+        super.onResume()
+        isNetworkAvailable = isOnline(applicationContext)
+        if (!isNetworkAvailable && isDialogNull()) {
+            showNoInternetConnectionDialog()
+        }
     }
 
-    override fun onStop() {
-        super.onStop()
-        presenter.detachView(this)
+    protected fun showNoInternetConnectionDialog() {
+        showAlertDialog(
+            getString(R.string.dialog_title_device_is_offline),
+            getString(R.string.dialog_message_device_is_offline)
+        )
     }
+
+    protected fun showAlertDialog(title: String?, message: String?) {
+        AlertDialogFragment.newInstance(title, message).show(supportFragmentManager, DIALOG_FRAGMENT_TAG)
+    }
+
+    private fun isDialogNull(): Boolean {
+        return supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) == null
+    }
+
+    abstract fun renderData(dataModel: T)
 }
