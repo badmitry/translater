@@ -9,12 +9,13 @@ import com.badmitry.translator.model.data.DataModel
 
 class MainAdapter(
     private var onListItemClickListener: OnListItemClickListener,
-    private var data: List<DataModel>,
     private val context: Context
 ) :
     RecyclerView.Adapter<MainAdapter.RecyclerItemViewHolder>() {
 
     lateinit var adapterBinding: ActivityMainRecyclerviewItemBinding
+
+    private var data: List<DataModel> = arrayListOf()
 
     fun setData(data: List<DataModel>) {
         this.data = data

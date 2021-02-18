@@ -6,16 +6,20 @@ import java.io.IOException
 
 class BaseInterceptor private constructor() : Interceptor {
 
-    private var responseCode: Int = 0
-
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val response = chain.proceed(chain.request())
-        responseCode = response.code
-        return response
+        val responseCode = response.code
+        return if (responseCode != 200) {
+            response.newBuilder()
+                .message(getResponseCode(responseCode).toString())
+                .build()
+        } else {
+            response
+        }
     }
 
-    fun getResponseCode(): ServerResponseStatusCode {
+    fun getResponseCode(responseCode : Int): ServerResponseStatusCode {
         var statusCode = ServerResponseStatusCode.UNDEFINED_ERROR
         when (responseCode / 100) {
             1 -> statusCode = ServerResponseStatusCode.INFO

@@ -1,7 +1,8 @@
-package com.badmitry.translater.presenter
+package com.badmitry.translator.viewmodel
 
 import io.reactivex.Observable
 
-interface IInteractor<T> {
+interface Interactor<T> {
+
     fun getData(word: String, fromRemoteSource: Boolean): Observable<T>
 }
