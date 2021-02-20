@@ -1,29 +1,16 @@
 package com.badmitry.translater.app
 
 import android.app.Application
-import com.badmitry.translater.di.DaggerAppComponent
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
-import javax.inject.Inject
+import com.badmitry.translater.di.application
+import com.badmitry.translater.di.mainScreen
+import org.koin.core.context.startKoin
 
-class App : Application(), HasAndroidInjector {
-
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
-
-//    override fun activityInjector(): DispatchingAndroidInjector<Activity>? {
-//        return dispatchingAndroidInjector
-//    }
-
-    override fun androidInjector(): DispatchingAndroidInjector<Any>? {
-        return dispatchingAndroidInjector
-    }
+class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        DaggerAppComponent.builder()
-            .application(this)
-            .build()
-            .inject(this)
+        startKoin {
+            modules(listOf(application, mainScreen))
+        }
     }
 }

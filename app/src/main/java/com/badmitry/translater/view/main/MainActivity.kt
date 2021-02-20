@@ -7,7 +7,6 @@ import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.badmitry.translater.R
 import com.badmitry.translater.databinding.MainLayoutBinding
@@ -16,8 +15,7 @@ import com.badmitry.translater.view.base.isOnline
 import com.badmitry.translater.view.main.adapter.MainAdapter
 import com.badmitry.translator.model.data.AppState
 import com.badmitry.translator.model.data.DataModel
-import dagger.android.AndroidInjection
-import javax.inject.Inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<AppState, MainInteractor>() {
 
@@ -26,8 +24,6 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
             "74a54328-5d62-46bf-ab6b-cbf5fgt0-092395"
     }
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
     override lateinit var model: MainViewModel
     private var binding: MainLayoutBinding? = null
     private val adapter: MainAdapter by lazy { MainAdapter(onListItemClickListener, this) }
@@ -58,16 +54,23 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        model = viewModelFactory.create(MainViewModel::class.java)
-        model.subscribe().observe(this@MainActivity, Observer<AppState> { renderData(it) })
         binding = DataBindingUtil.setContentView(this, R.layout.main_layout)
+        iniViewModel()
         binding?.fab?.setOnClickListener(fabClickListener)
         binding?.let {
             it.mainRv.layoutManager = LinearLayoutManager(applicationContext)
             it.mainRv.adapter = adapter
         }
+    }
+
+    private fun iniViewModel() {
+        if (binding?.mainRv?.adapter != null) {
+            throw IllegalStateException("The ViewModel should be initialised first")
+        }
+        val viewModel: MainViewModel by viewModel()
+        model = viewModel
+        model.subscribe().observe(this@MainActivity, Observer<AppState> { renderData(it) })
     }
 
     override fun renderData(appState: AppState) {
