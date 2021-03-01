@@ -13,4 +13,6 @@
     <string name="dialog_button_cancel">Выйти</string>
     <string name="dialog_tittle_sorry">Упс</string>
     <string name="error_stub">ошибка</string>
+    <string name="image_stub">image</string>
+    <string name="menu_title_history">История запросов</string>
 </resources>

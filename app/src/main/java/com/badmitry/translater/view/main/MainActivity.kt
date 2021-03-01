@@ -1,10 +1,12 @@
 package com.badmitry.translater.view.main
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +14,8 @@ import com.badmitry.translater.R
 import com.badmitry.translater.databinding.MainLayoutBinding
 import com.badmitry.translater.view.base.BaseActivity
 import com.badmitry.translater.view.base.isOnline
+import com.badmitry.translater.view.descriptionscreen.DescriptionActivity
+import com.badmitry.translater.view.history.HistoryActivity
 import com.badmitry.translater.view.main.adapter.MainAdapter
 import com.badmitry.translator.model.data.AppState
 import com.badmitry.translator.model.data.DataModel
@@ -30,7 +34,14 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
     private val onListItemClickListener: MainAdapter.OnListItemClickListener =
         object : MainAdapter.OnListItemClickListener {
             override fun onItemClick(data: DataModel) {
-                Toast.makeText(this@MainActivity, data.text, Toast.LENGTH_SHORT).show()
+                startActivity(
+                    DescriptionActivity.getIntent(
+                        this@MainActivity,
+                        data.text!!,
+                        convertMeaningsToString(data.meanings!!),
+                        data.meanings[0].imageUrl
+                    )
+                )
             }
         }
 
@@ -53,6 +64,21 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
             }
         }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.history_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_history -> {
+                startActivity(Intent(this, HistoryActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.main_layout)
@@ -73,38 +99,14 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         model.subscribe().observe(this@MainActivity, Observer<AppState> { renderData(it) })
     }
 
-    override fun renderData(appState: AppState) {
-        when (appState) {
-            is AppState.Success -> {
-                showViewSuccess()
-                val dataModel = appState.data
-                if (dataModel == null || dataModel.isEmpty()) {
-                    showAlertDialog(
-                        getString(R.string.dialog_tittle_sorry),
-                        getString(R.string.empty_server_response_on_success)
-                    )
-                } else {
-                    adapter.setData(dataModel)
-                }
-            }
-            is AppState.Loading -> {
-                showViewLoading()
-            }
-            is AppState.Error -> {
-                showViewSuccess()
-                showAlertDialog(getString(R.string.error_stub), appState.error.message)
-            }
-        }
-    }
-
-    private fun showViewSuccess() {
+    override fun showViewSuccess() {
         binding?.let {
             it.mainPb.visibility = GONE
             it.mainRv.visibility = VISIBLE
         }
     }
 
-    private fun showViewLoading() {
+    override fun showViewLoading() {
         binding?.let {
             it.mainPb.visibility = VISIBLE
             it.mainRv.visibility = GONE
@@ -116,4 +118,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         binding = null
     }
 
+    override fun setDataToAdapter(data: List<DataModel>) {
+        adapter.setData(data)
+    }
 }

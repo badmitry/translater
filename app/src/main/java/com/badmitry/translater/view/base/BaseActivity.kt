@@ -1,9 +1,11 @@
 package com.badmitry.translater.view.base
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.badmitry.translater.R
 import com.badmitry.translator.model.data.AppState
+import com.badmitry.translator.model.data.DataModel
 import com.badmitry.translator.view.main.AlertDialogFragment
 import com.badmitry.translator.viewmodel.BaseViewModel
 import com.badmitry.translator.viewmodel.Interactor
@@ -46,5 +48,35 @@ abstract class BaseActivity<T : AppState, I : Interactor<T>> : AppCompatActivity
         return supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) == null
     }
 
-    abstract fun renderData(dataModel: T)
+    abstract fun setDataToAdapter(data: List<DataModel>)
+
+    protected fun renderData(appState: T) {
+        when (appState) {
+            is AppState.Success -> {
+                showViewSuccess()
+                appState.data?.let {
+                    if (it.isEmpty()) {
+                        showAlertDialog(
+                            getString(R.string.dialog_tittle_sorry),
+                            getString(R.string.empty_server_response_on_success)
+                        )
+                    } else {
+                        setDataToAdapter(it)
+                    }
+                }
+            }
+            is AppState.Loading -> {
+                showViewLoading()
+            }
+            is AppState.Error -> {
+                showViewSuccess()
+                showAlertDialog(getString(R.string.error_stub), appState.error.message)
+            }
+        }
+    }
+
+    abstract fun showViewSuccess()
+
+    abstract fun showViewLoading()
+
 }
