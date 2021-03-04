@@ -2,9 +2,7 @@ package com.badmitry.translator.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.badmitry.translator.model.data.AppState
-import com.badmitry.translator.rx.SchedulerProvider
-import io.reactivex.disposables.CompositeDisposable
+import com.badmitry.data.AppState
 import kotlinx.coroutines.*
 
 abstract class BaseViewModel<T : AppState>(

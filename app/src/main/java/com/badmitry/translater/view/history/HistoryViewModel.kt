@@ -1,9 +1,9 @@
 package com.badmitry.translater.view.history
 
 import androidx.lifecycle.LiveData
+import com.badmitry.data.AppState
 import com.badmitry.translater.view.main.HistoryInteractor
 import com.badmitry.translater.view.main.parseLocalSearchResults
-import com.badmitry.translator.model.data.AppState
 import com.badmitry.translator.viewmodel.BaseViewModel
 import kotlinx.coroutines.launch
 

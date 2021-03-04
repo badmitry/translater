@@ -1,11 +1,10 @@
 package com.badmitry.translater.view.base
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.badmitry.data.AppState
+import com.badmitry.data.DataModel
 import com.badmitry.translater.R
-import com.badmitry.translator.model.data.AppState
-import com.badmitry.translator.model.data.DataModel
 import com.badmitry.translator.view.main.AlertDialogFragment
 import com.badmitry.translator.viewmodel.BaseViewModel
 import com.badmitry.translator.viewmodel.Interactor

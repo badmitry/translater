@@ -4,8 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.badmitry.data.DataModel
 import com.badmitry.translater.databinding.ActivityMainRecyclerviewItemBinding
-import com.badmitry.translator.model.data.DataModel
 
 class MainAdapter(
     private var onListItemClickListener: OnListItemClickListener,

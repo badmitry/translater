@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.badmitry.data.DataModel
 import com.badmitry.translater.databinding.HistoryRvItemBinding
-import com.badmitry.translator.model.data.DataModel
 
 class HistoryAdapter(
     private val context: Context

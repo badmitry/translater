@@ -1,8 +1,8 @@
 package com.badmitry.translater.view.main
 
-import com.badmitry.translator.model.data.AppState
-import com.badmitry.translator.model.data.DataModel
-import com.badmitry.translator.model.data.Meanings
+import com.badmitry.data.AppState
+import com.badmitry.data.DataModel
+import com.badmitry.data.Meanings
 
 fun parseSearchResults(data: AppState): AppState {
     val newSearchResults = arrayListOf<DataModel>()
@@ -23,8 +23,8 @@ fun parseSearchResults(data: AppState): AppState {
 private fun parseResult(dataModel: DataModel, newDataModels: ArrayList<DataModel>) {
     if (!dataModel.text.isNullOrBlank() && !dataModel.meanings.isNullOrEmpty()) {
         val newMeanings = arrayListOf<Meanings>()
-        for (meaning in dataModel.meanings) {
-            if (meaning.translation != null && !meaning.translation.translation.isNullOrBlank()) {
+        for (meaning in dataModel.meanings!!) {
+            if (meaning.translation != null && !meaning.translation!!.translation.isNullOrBlank()) {
                 newMeanings.add(Meanings(meaning.translation, meaning.imageUrl))
             }
         }
@@ -85,8 +85,8 @@ private fun getSuccessResultData(
 private fun parseOnlineResult(searchResult: DataModel, newSearchResults: ArrayList<DataModel>) {
     if (!searchResult.text.isNullOrBlank() && !searchResult.meanings.isNullOrEmpty()) {
         val newMeanings = arrayListOf<Meanings>()
-        for (meaning in searchResult.meanings) {
-            if (meaning.translation != null && !meaning.translation.translation.isNullOrBlank()) {
+        for (meaning in searchResult.meanings!!) {
+            if (meaning.translation != null && !meaning.translation!!.translation.isNullOrBlank()) {
                 newMeanings.add(Meanings(meaning.translation, meaning.imageUrl))
             }
         }

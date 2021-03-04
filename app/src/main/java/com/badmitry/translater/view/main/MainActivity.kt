@@ -10,6 +10,8 @@ import android.view.View.VISIBLE
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.badmitry.data.AppState
+import com.badmitry.data.DataModel
 import com.badmitry.translater.R
 import com.badmitry.translater.databinding.MainLayoutBinding
 import com.badmitry.translater.view.base.BaseActivity
@@ -17,8 +19,6 @@ import com.badmitry.translater.view.base.isOnline
 import com.badmitry.translater.view.descriptionscreen.DescriptionActivity
 import com.badmitry.translater.view.history.HistoryActivity
 import com.badmitry.translater.view.main.adapter.MainAdapter
-import com.badmitry.translator.model.data.AppState
-import com.badmitry.translator.model.data.DataModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<AppState, MainInteractor>() {
@@ -39,7 +39,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
                         this@MainActivity,
                         data.text!!,
                         convertMeaningsToString(data.meanings!!),
-                        data.meanings[0].imageUrl
+                        data.meanings!![0].imageUrl
                     )
                 )
             }

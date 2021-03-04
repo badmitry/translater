@@ -1,18 +1,15 @@
 package com.badmitry.translater.view.history
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import com.badmitry.data.AppState
+import com.badmitry.data.DataModel
 import com.badmitry.translater.R
 import com.badmitry.translater.databinding.HistoryLayoutBinding
 import com.badmitry.translater.view.base.BaseActivity
 import com.badmitry.translater.view.history.adapter.HistoryAdapter
 import com.badmitry.translater.view.main.HistoryInteractor
-import com.badmitry.translator.model.data.AppState
-import com.badmitry.translator.model.data.DataModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class HistoryActivity : BaseActivity<AppState, HistoryInteractor>() {

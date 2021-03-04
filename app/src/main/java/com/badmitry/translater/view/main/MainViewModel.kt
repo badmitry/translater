@@ -1,10 +1,8 @@
 package com.badmitry.translater.view.main
 
 import androidx.lifecycle.LiveData
-import com.badmitry.translator.model.data.AppState
+import com.badmitry.data.AppState
 import com.badmitry.translator.viewmodel.BaseViewModel
-import io.reactivex.disposables.Disposable
-import io.reactivex.observers.DisposableObserver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

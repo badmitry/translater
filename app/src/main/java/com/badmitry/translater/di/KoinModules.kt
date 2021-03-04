@@ -1,19 +1,18 @@
 package com.badmitry.translater.di
 
 import androidx.room.Room
-import com.badmitry.translater.model.datasource.RepoImplLocal
-import com.badmitry.translater.model.datasource.RepositoryLocal
-import com.badmitry.translater.room.DataBase
+import com.badmitry.data.DataModel
+import com.badmitry.repository.datasource.RepoImplLocal
+import com.badmitry.repository.datasource.RepositoryLocal
+import com.badmitry.repository.datasource.RetrofitImplementation
+import com.badmitry.repository.datasource.RoomDataBaseImplementation
+import com.badmitry.repository.repo.Repository
+import com.badmitry.repository.repo.RepositoryImplementation
+import com.badmitry.repository.room.DataBase
 import com.badmitry.translater.view.history.HistoryViewModel
 import com.badmitry.translater.view.main.HistoryInteractor
 import com.badmitry.translater.view.main.MainInteractor
 import com.badmitry.translater.view.main.MainViewModel
-import com.badmitry.translator.model.data.DataModel
-import com.badmitry.translator.model.datasource.RetrofitImplementation
-import com.badmitry.translator.model.datasource.RoomDataBaseImplementation
-import com.badmitry.translator.model.repository.Repository
-import com.badmitry.translator.model.repository.RepositoryImplementation
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val application = module {
