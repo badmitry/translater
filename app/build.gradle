@@ -44,4 +44,5 @@ android {
         implementation project(Modules.repository)
         implementation project(Modules.data)
     }
+    dynamicFeatures = [':dynamicfeaturedescription']
 }

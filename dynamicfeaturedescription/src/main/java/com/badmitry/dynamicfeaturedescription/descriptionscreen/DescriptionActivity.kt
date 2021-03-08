@@ -1,16 +1,15 @@
 package com.badmitry.translater.view.descriptionscreen
 
-import android.content.Context
-import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.badmitry.translater.R
-import com.badmitry.translater.databinding.DescriptionLayoutBinding
+import com.badmitry.dynamicfeaturedescription.R
+import com.badmitry.dynamicfeaturedescription.databinding.DescriptionLayoutBinding
 import com.badmitry.translater.view.base.isOnline
+import com.badmitry.translater.view.main.MainActivity
 import com.badmitry.translator.view.main.AlertDialogFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -51,9 +50,9 @@ class DescriptionActivity : AppCompatActivity() {
     private fun setData() {
         val bundle = intent.extras
         binding?.let{
-            it.descriptionHeader.text = bundle?.getString(WORD_EXTRA)
-            it.descriptionTextview.text = bundle?.getString(DESCRIPTION_EXTRA)
-            val imageLink = bundle?.getString(URL_EXTRA)
+            it.descriptionHeader.text = bundle?.getString(MainActivity.WORD_EXTRA)
+            it.descriptionTextview.text = bundle?.getString(MainActivity.DESCRIPTION_EXTRA)
+            val imageLink = bundle?.getString(MainActivity.URL_EXTRA)
             if (imageLink.isNullOrBlank()) {
                 stopRefreshAnimationIfNeeded()
             } else {
@@ -140,20 +139,20 @@ class DescriptionActivity : AppCompatActivity() {
 
         private const val DIALOG_FRAGMENT_TAG = "8c7dff51-9769-4f6d-bbee-a3896085e76e"
 
-        private const val WORD_EXTRA = "f76a288a-5dcc-43f1-ba89-7fe1d53f63b0"
-        private const val DESCRIPTION_EXTRA = "0eeb92aa-520b-4fd1-bb4b-027fbf963d9a"
-        private const val URL_EXTRA = "6e4b154d-e01f-4953-a404-639fb3bf7281"
-
-        fun getIntent(
-            context: Context,
-            word: String,
-            description: String,
-            url: String?
-        ): Intent = Intent(context, DescriptionActivity::class.java).apply {
-            putExtra(WORD_EXTRA, word)
-            putExtra(DESCRIPTION_EXTRA, description)
-            putExtra(URL_EXTRA, url)
-        }
+//        private const val WORD_EXTRA = "f76a288a-5dcc-43f1-ba89-7fe1d53f63b0"
+//        private const val DESCRIPTION_EXTRA = "0eeb92aa-520b-4fd1-bb4b-027fbf963d9a"
+//        private const val URL_EXTRA = "6e4b154d-e01f-4953-a404-639fb3bf7281"
+//
+//        fun getIntent(
+//            context: Context,
+//            word: String,
+//            description: String,
+//            url: String?
+//        ): Intent = Intent(context, DescriptionActivity::class.java).apply {
+//            putExtra(WORD_EXTRA, word)
+//            putExtra(DESCRIPTION_EXTRA, description)
+//            putExtra(URL_EXTRA, url)
+//        }
     }
 
     override fun onDestroy() {
