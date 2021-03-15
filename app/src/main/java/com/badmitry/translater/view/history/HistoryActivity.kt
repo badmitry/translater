@@ -10,6 +10,7 @@ import com.badmitry.translater.databinding.HistoryLayoutBinding
 import com.badmitry.translater.view.base.BaseActivity
 import com.badmitry.translater.view.history.adapter.HistoryAdapter
 import com.badmitry.translater.view.main.HistoryInteractor
+import org.koin.android.scope.currentScope
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class HistoryActivity : BaseActivity<AppState, HistoryInteractor>() {
@@ -39,7 +40,7 @@ class HistoryActivity : BaseActivity<AppState, HistoryInteractor>() {
             if (it.adapter != null) {
                 throw IllegalStateException("The ViewModel should be initialised first")
             }
-            val viewModel: HistoryViewModel by viewModel()
+            val viewModel: HistoryViewModel by currentScope.inject()
             model = viewModel
             model.subscribe().observe(this@HistoryActivity, Observer<AppState> { renderData(it) })
         }

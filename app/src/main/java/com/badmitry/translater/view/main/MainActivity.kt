@@ -15,14 +15,18 @@ import com.badmitry.data.AppState
 import com.badmitry.data.DataModel
 import com.badmitry.translater.R
 import com.badmitry.translater.databinding.MainLayoutBinding
+import com.badmitry.translater.di.injectDependencies
 import com.badmitry.translater.view.base.BaseActivity
 import com.badmitry.translater.view.base.isOnline
 //import com.badmitry.translater.view.descriptionscreen.DescriptionActivity
 import com.badmitry.translater.view.history.HistoryActivity
 import com.badmitry.translater.view.main.adapter.MainAdapter
+import com.badmitry.translater.view.viewById
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
+import org.koin.android.scope.currentScope
 import org.koin.android.viewmodel.ext.android.viewModel
 
 private const val DESCRIPTION_ACTIVITY_PATH = "com.badmitry.dynamicfeaturedescription.descriptionscreen.DescriptionActivity"
@@ -36,6 +40,8 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         const val DESCRIPTION_EXTRA = "0eeb92aa-520b-4fd1-bb4b-027fbf963d9a"
         const val URL_EXTRA = "6e4b154d-e01f-4953-a404-639fb3bf7281"
     }
+
+    private val searchFab by viewById<FloatingActionButton>(R.id.fab)
 
     override lateinit var model: MainViewModel
     private lateinit var splitInstallManager: SplitInstallManager
@@ -118,7 +124,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.main_layout)
         iniViewModel()
-        binding?.fab?.setOnClickListener(fabClickListener)
+        searchFab.setOnClickListener(fabClickListener)
         binding?.let {
             it.mainRv.layoutManager = LinearLayoutManager(applicationContext)
             it.mainRv.adapter = adapter
@@ -129,7 +135,8 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         if (binding?.mainRv?.adapter != null) {
             throw IllegalStateException("The ViewModel should be initialised first")
         }
-        val viewModel: MainViewModel by viewModel()
+        injectDependencies()
+        val viewModel: MainViewModel by currentScope.inject()
         model = viewModel
         model.subscribe().observe(this@MainActivity, Observer<AppState> { renderData(it) })
     }

@@ -13,7 +13,7 @@ class App : Application() {
         super.onCreate()
         startKoin {
             androidContext(applicationContext)
-            modules(listOf(application, mainScreen, historyScreen))
+//            modules(listOf(application, mainScreen, historyScreen))
         }
     }
 }

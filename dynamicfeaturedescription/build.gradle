@@ -13,6 +13,17 @@ android {
         versionName "1.0"
 
     }
+
+    compileSdkVersion Config.compile_sdk
+    buildToolsVersion "30.0.2"
+
+    androidExtensions {
+        experimental = true
+    }
+
+    buildFeatures {
+        dataBinding true
+    }
 }
 //android {
 //    compileSdkVersion 30
@@ -35,6 +46,7 @@ android {
 //        }
 //    }
 //}
+
 dependencies {
     implementation project(Modules.app)
 }

@@ -1,4 +1,4 @@
-package com.badmitry.translater.view.descriptionscreen
+package com.badmitry.dynamicfeaturedescription.descriptionscreen
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
