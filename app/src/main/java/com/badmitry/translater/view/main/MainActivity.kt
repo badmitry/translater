@@ -1,7 +1,9 @@
 package com.badmitry.translater.view.main
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -18,7 +20,6 @@ import com.badmitry.translater.databinding.MainLayoutBinding
 import com.badmitry.translater.di.injectDependencies
 import com.badmitry.translater.view.base.BaseActivity
 import com.badmitry.translater.view.base.isOnline
-//import com.badmitry.translater.view.descriptionscreen.DescriptionActivity
 import com.badmitry.translater.view.history.HistoryActivity
 import com.badmitry.translater.view.main.adapter.MainAdapter
 import com.badmitry.translater.view.viewById
@@ -27,10 +28,11 @@ import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import org.koin.android.scope.currentScope
-import org.koin.android.viewmodel.ext.android.viewModel
 
-private const val DESCRIPTION_ACTIVITY_PATH = "com.badmitry.dynamicfeaturedescription.descriptionscreen.DescriptionActivity"
+private const val DESCRIPTION_ACTIVITY_PATH =
+    "com.badmitry.dynamicfeaturedescription.descriptionscreen.DescriptionActivity"
 private const val DESCRIPTION_ACTIVITY_FEATURE_NAME = "dynamicfeaturedescription"
+
 class MainActivity : BaseActivity<AppState, MainInteractor>() {
 
     companion object {
@@ -60,11 +62,15 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
                 splitInstallManager
                     .startInstall(request)
                     .addOnSuccessListener {
-                        val intent = Intent().setClassName(packageName, DESCRIPTION_ACTIVITY_PATH).apply {
-                            putExtra(WORD_EXTRA, data.text!!)
-                            putExtra(DESCRIPTION_EXTRA, convertMeaningsToString(data.meanings!!))
-                            putExtra(URL_EXTRA, data.meanings!![0].imageUrl)
-                        }
+                        val intent =
+                            Intent().setClassName(packageName, DESCRIPTION_ACTIVITY_PATH).apply {
+                                putExtra(WORD_EXTRA, data.text!!)
+                                putExtra(
+                                    DESCRIPTION_EXTRA,
+                                    convertMeaningsToString(data.meanings!!)
+                                )
+                                putExtra(URL_EXTRA, data.meanings!![0].imageUrl)
+                            }
                         startActivity(intent)
                     }
                     .addOnFailureListener {
@@ -107,6 +113,8 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.history_menu, menu)
+        menu?.findItem(R.id.menu_screen_settings)?.isVisible =
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -114,6 +122,10 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         return when (item.itemId) {
             R.id.menu_history -> {
                 startActivity(Intent(this, HistoryActivity::class.java))
+                true
+            }
+            R.id.menu_screen_settings -> {
+                startActivityForResult(Intent(Settings.Panel.ACTION_INTERNET_CONNECTIVITY), 42)
                 true
             }
             else -> super.onOptionsItemSelected(item)

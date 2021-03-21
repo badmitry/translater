@@ -16,4 +16,5 @@
     <string name="image_stub">image</string>
     <string name="menu_title_history">История запросов</string>
     <string name="title_dynamicfeaturedescription">descriptionscreen</string>
+    <string name="menu_title_settings">Settings</string>
 </resources>
