@@ -1,2 +1,5 @@
+include ':dynamicfeaturedescription'
+include ':data'
+include ':repository'
 include ':app'
 rootProject.name = "translater"

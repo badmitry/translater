@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">translater</string>
+    <string name="app_name">translator</string>
     <string name="empty_server_response_on_success">Сервер не нашел введенное слово</string>
     <string name="undefined_error">Ошибка</string>
     <string name="hi">hi</string>
@@ -7,4 +7,14 @@
     <string name="search_hint">Новое слово</string>
     <string name="delete_description">Удалить</string>
     <string name="reload">Перезагрузить</string>
+    <string name="dialog_title_device_is_offline">Внимание!</string>
+    <string name="dialog_message_device_is_offline">Интеренет недоступен</string>
+    <string name="dialog_title_stub">диалог</string>
+    <string name="dialog_button_cancel">Выйти</string>
+    <string name="dialog_tittle_sorry">Упс</string>
+    <string name="error_stub">ошибка</string>
+    <string name="image_stub">image</string>
+    <string name="menu_title_history">История запросов</string>
+    <string name="title_dynamicfeaturedescription">descriptionscreen</string>
+    <string name="menu_title_settings">Settings</string>
 </resources>
